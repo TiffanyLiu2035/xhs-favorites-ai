@@ -383,7 +383,7 @@ const mockKnowledge: KnowledgeEntry[] = [
 
 // ---- Knowledge Base Tab ----
 
-function KnowledgeBaseTab() {
+function KnowledgeBaseTab({ onNoteTap }: { onNoteTap?: (noteId: string) => void }) {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const filters = [
     { key: 'all', label: '全部', count: mockKnowledge.length },
@@ -468,9 +468,15 @@ function KnowledgeBaseTab() {
                 {entry.tags.map((tag) => (
                   <span key={tag} className="text-[10px] text-[#4A90D9] bg-[#F0F5FF] px-1.5 py-0.5 rounded-full">#{tag}</span>
                 ))}
-                <span className="text-[10px] text-[#CCC] ml-auto truncate max-w-[40%]">
+                <button
+                  className="text-[10px] text-[#4A90D9] ml-auto truncate max-w-[40%] hover:underline"
+                  onClick={() => {
+                    const note = mockNotes.find((n) => n.title.includes(entry.sourceNote.slice(0, 6)));
+                    if (note && onNoteTap) onNoteTap(note.id);
+                  }}
+                >
                   {'\uD83D\uDCCE'} {entry.sourceNote.slice(0, 12)}...
-                </span>
+                </button>
               </div>
             </motion.div>
           );
@@ -2814,7 +2820,7 @@ export default function Home() {
             {/* Content area */}
             <div className="bg-xhs-divider min-h-[50vh]">
               {activeSecondaryTab === '📮 动态' && <ManagerTab />}
-              {activeSecondaryTab === '📚 知识库' && <KnowledgeBaseTab />}
+              {activeSecondaryTab === '📚 知识库' && <KnowledgeBaseTab onNoteTap={(noteId) => { const note = mockNotes.find((n) => n.id === noteId); if (note) setSelectedNote(note); }} />}
               {activeSecondaryTab === '评论' && <SavedCommentsTab />}
               {activeSecondaryTab === '话题' && <SavedTopicsTab />}
               {activeSecondaryTab === '文件' && <SavedFilesTab />}
