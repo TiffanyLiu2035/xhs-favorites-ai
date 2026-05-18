@@ -148,6 +148,9 @@ function AnimatedSection({ children, className }: { children: React.ReactNode; c
     <div
       ref={ref}
       className={`transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} ${className || ''}`}
+      onTransitionEnd={() => {
+        if (ref.current) ref.current.style.transition = 'none';
+      }}
     >
       {children}
     </div>
