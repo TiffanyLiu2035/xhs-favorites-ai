@@ -1,4 +1,4 @@
-export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI Agent 改版方案——Collect, that's it.
+export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI Agent 改版方案
 
 > 「收藏」是人类面对信息洪流时的本能反应——在转瞬即逝中按下一个"留住"的按钮，仿佛为未来的自己埋下一枚回到此刻的锚点。然而锚点越埋越多，海面却早已换了方向。想用时找不到、过期了不知道、零散的信息无法转化为行动，收藏夹终于从「灵感花园」长成了「信息坟场」。
 >
@@ -1166,7 +1166,7 @@ Agent 生产标注样本 → 质量校验 → 去重合版 → 版本管理(YAML
 
 本 Demo 模拟 B 类（无序型）用户的完整旅程，覆盖「存储 → 管理 → 应用 → 延伸」四步闭环的核心交互。
 
-**技术栈：** Next.js + React + Tailwind CSS + TypeScript + Framer Motion + SSE 流式响应
+**技术栈：** Next.js + React + Tailwind CSS + TypeScript + Framer Motion + SSE 流式响应 + Claude API（Anthropic）
 
 **Demo 数据：** 60 条模拟笔记，覆盖美食、旅行、穿搭等 8 个品类，含过期笔记、多维标签和可提取实体。
 
