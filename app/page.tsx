@@ -471,8 +471,15 @@ function KnowledgeBaseTab({ onNoteTap }: { onNoteTap?: (noteId: string) => void 
                 <button
                   className="text-[10px] text-[#4A90D9] ml-auto truncate max-w-[40%] hover:underline"
                   onClick={() => {
-                    const note = mockNotes.find((n) => n.title.includes(entry.sourceNote.slice(0, 6)));
-                    if (note && onNoteTap) onNoteTap(note.id);
+                    if (!onNoteTap) return;
+                    // Try exact match first, then keyword match, then tag match
+                    const src = entry.sourceNote;
+                    let note = mockNotes.find((n) => n.title.includes(src.slice(0, 6)));
+                    if (!note) {
+                      const keywords = entry.tags;
+                      note = mockNotes.find((n) => keywords.some((kw) => n.title.includes(kw) || (n.tags || []).some((t) => t.includes(kw))));
+                    }
+                    if (note) onNoteTap(note.id);
                   }}
                 >
                   {'\uD83D\uDCCE'} {entry.sourceNote.slice(0, 12)}...
