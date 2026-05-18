@@ -1,0 +1,76 @@
+# 批量任务配置文件 - react
+
+# 网页端是否使用 config.yaml 中的 API Key（默认 true）
+# 设为 false 时，网页端将使用前端传入的 key，不覆盖
+use_default_api_key_in_web_ui: false
+
+# 工作流名称和版本（固定值，勿改）
+workflow_name: "react"
+workflow_version: "1.0"
+
+# Prompts 文件夹路径（相对于 prompts/ 目录）
+prompts_folder: "/Users/tiffanyliu/xhs-favorites-ai/prompts/react"
+
+# ============================================================
+# 模型配置：定义所有可用的模型及其连接参数
+# ============================================================
+model_config:
+  gemini3:
+    client_type: "gemini"
+    api_key: ""
+    # api_url: ""  # 留空则使用 config/config.py 中的默认值
+    retry_delay: 10
+    max_retries: 6
+
+  # 示例：OpenAI 兼容模型
+  # kimi_k2.5:
+  #   client_type: "openai"
+  #   api_key: "你的_api_key"
+  #   api_url: "https://maas.devops.xiaohongshu.com/v1"
+  #   model: "kimi-k2.5"
+  #   retry_delay: 10
+  #   max_retries: 6
+
+  # 示例：Dots 本地模型
+  # dots_local:
+  #   client_type: "dots"
+  #   ip_port: "10.39.1.115:15691"
+
+# ============================================================
+# 默认配置
+# ============================================================
+default_config:
+  max_iterations: 5
+
+  # 是否跳过 IntentAgent，直接进入 ReactAgent
+  skip_intent_agent: true
+
+  # ReactAgent 是否使用模型原生的 function call 能力
+  # true:  通过 API 的 tools 参数传递工具定义，模型返回结构化 tool_calls
+  # false: 将工具定义转为文本拼入 prompt，从模型输出文本中解析 function call（默认）
+  use_native_function_call: true
+
+  # 各 Agent 使用的模型（值为 model_config 中的键名）
+  # 留空或不配置的 agent 使用 default_model
+  default_model: "gemini3"
+  agent_models:
+    intent_agent: ""
+    react_agent: ""
+    report_agent: ""
+
+  enabled_tools:
+    - hybrid_web_search
+    - get_poi
+    - get_poi_nearby
+    - search_smzdm
+    - search_image
+    - search_ecom
+    - get_distance
+    - get_weather_info
+    - fetch_note
+    - fetch_profile
+    - fetch_poi
+    - fetch_product
+    # - ask_for_location_permission
+    # - search_google_maps
+    # - fetch_google_maps_reviews

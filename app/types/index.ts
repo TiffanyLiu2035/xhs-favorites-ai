@@ -15,6 +15,7 @@ export interface Note {
   // AI 整理后添加的字段
   aiCategory?: string;     // AI 分类
   aiTags?: string[];       // AI 标签
+  savedAt?: string;        // 收藏日期
   isExpired?: boolean;     // 是否过期
   expiredReason?: string;  // 过期原因
 }
