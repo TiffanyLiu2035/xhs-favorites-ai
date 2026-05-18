@@ -658,8 +658,8 @@ function SecondaryTabs({
     { label: '📚 知识库', count: null },
     { label: '笔记', count: 286 },
     { label: '评论', count: 102 },
-    { label: '话题', count: null },
-    { label: '文件', count: null },
+    { label: '话题', count: 1 },
+    { label: '文件', count: 2 },
   ];
 
   return (
