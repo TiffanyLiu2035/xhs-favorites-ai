@@ -2342,8 +2342,25 @@ export default function Home() {
     return () => scrollContainer!.removeEventListener('scroll', handleScroll);
   }, [bubblesHandled, welcomeCardVisible]);
 
+  // Pattern match for organize intent — skip LLM, show button directly
+  const ORGANIZE_PATTERNS = /整理|归类|分类|帮我理一下|收拾一下/;
+
   const sendChatMessage = useCallback(async (text: string) => {
     setChatMessages((prev) => [...prev, { role: 'user', content: text }]);
+
+    // ---- 整理收藏夹：确定性操作，不走 LLM ----
+    if (ORGANIZE_PATTERNS.test(text)) {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: '好的！我来帮你整理收藏夹 ✨\n\n我会分析你的全部收藏，按内容自动归类到不同专辑。点击下方按钮开始整理吧👇',
+          organizeAction: true,
+        },
+      ]);
+      return;
+    }
+
     setChatLoading(true);
 
     setChatMessages((prev) => [
