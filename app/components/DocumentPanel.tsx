@@ -96,10 +96,13 @@ interface TocItem {
   id: string;
 }
 
-// Truncate after " — " or " - " for cleaner TOC display
+// Truncate after " — ", " - ", or "：" for cleaner TOC display
 function tocDisplayText(text: string): string {
   const dash = text.search(/\s[—\-]\s/);
-  return dash > 0 ? text.slice(0, dash) : text;
+  if (dash > 0) return text.slice(0, dash);
+  const colon = text.indexOf('：');
+  if (colon > 0) return text.slice(0, colon);
+  return text;
 }
 
 function parseToc(markdown: string): TocItem[] {
