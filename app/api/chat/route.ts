@@ -634,6 +634,28 @@ function isSimpleChat(msg: string): boolean {
 }
 
 // ---------- API Route ----------
+//
+// 三条链路，按意图复杂度分级：
+//
+// ┌─────────────────────────────────────────────────────────────────────┐
+// │ 链路 A：Direct Reply（1 次 LLM）                                    │
+// │ 适用：日常闲聊、打招呼、问功能介绍                                     │
+// │ 示例："你好" "你能做什么" "谢谢"                                      │
+// │ 路径：pattern match → runDirectReply                                │
+// │ 不走 Intent 分类，不调用任何工具，响应最快                              │
+// ├─────────────────────────────────────────────────────────────────────┤
+// │ 链路 B：ReAct Chain（3 次 LLM）                                     │
+// │ 适用：需要调用工具的单步操作——搜索、整理、总结                           │
+// │ 示例："找一下成都美食" "帮我整理收藏夹" "总结穿搭收藏"                    │
+// │ 路径：Intent → React（工具调用）→ Report（生成回复）                    │
+// │ React 节点负责选择并执行工具，Report 节点将结果转化为自然语言              │
+// ├─────────────────────────────────────────────────────────────────────┤
+// │ 链路 C：Deep Research（6 次 LLM）                                   │
+// │ 适用：多步推理的复杂分析——行程规划、产品对比、深度攻略                     │
+// │ 示例："根据收藏做三天成都行程" "对比这几款粉底液" "帮我做露营清单"          │
+// │ 路径：Intent → Clarify → Plan → Search → Report → Editor            │
+// │ 5 个 Agent 协作，逐步拆解需求、检索收藏、生成结构化报告                   │
+// └─────────────────────────────────────────────────────────────────────┘
 
 export async function POST(request: NextRequest) {
   const { message, context } = await request.json();
@@ -648,7 +670,8 @@ export async function POST(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
-        // Fast path: simple chat — skip Intent + React, 1 LLM call only
+        // ======== 链路 A: Direct Reply (1 LLM call) ========
+        // 日常闲聊、打招呼等无需工具调用的简单对话
         if (isSimpleChat(message)) {
           const chatIntent: IntentResult = { intent: 'chat', params: {}, reasoning: '日常对话' };
           chain.push({ node: 'intent', result: chatIntent });
@@ -661,14 +684,13 @@ export async function POST(request: NextRequest) {
           return;
         }
 
-        // Node 1: Intent Agent
+        // 非简单对话 → 先走 Intent Agent 判断意图
         const { step: intentStep, intent } = await runIntentNode(message);
         chain.push(intentStep);
         controller.enqueue(encoder.encode(sseEncode('chain_step', { node: 'intent', result: intentStep.result })));
 
-        // Routing based on intent
+        // Intent 判定为闲聊 → 仍走 Direct Reply（2 LLM calls: intent + reply）
         if (intent.intent === 'chat') {
-          // ---- Direct Reply (2 LLM calls) ----
           const reply = await runDirectReply(message);
           chain.push({ node: 'report', result: { reply, direct: true } });
           controller.enqueue(encoder.encode(sseEncode('done', { reply, chain })));
@@ -676,15 +698,17 @@ export async function POST(request: NextRequest) {
           return;
         }
 
+        // ======== 链路 C: Deep Research (6 LLM calls) ========
+        // 复杂分析：行程规划、产品对比、深度攻略
         if (intent.intent === 'deep_research') {
-          // ---- Deep Research (6 LLM calls: intent + clarify + plan + search + report + editor) ----
           const reply = await runDeepResearch(message, intent, controller, encoder, chain);
           controller.enqueue(encoder.encode(sseEncode('done', { reply, chain })));
           controller.close();
           return;
         }
 
-        // ---- ReAct chain (3 LLM calls) ----
+        // ======== 链路 B: ReAct Chain (3 LLM calls) ========
+        // 单步工具操作：搜索收藏、整理分类、总结摘要
         const { step: reactStep, reactResult } = await runReactNode(message, intent, context || '');
         chain.push(reactStep);
         controller.enqueue(encoder.encode(sseEncode('chain_step', { node: 'react', result: reactStep.result })));
