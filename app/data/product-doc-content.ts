@@ -1,7 +1,10 @@
-export const productDocContent = `# 「薯管家」小红书收藏夹 AI Agent 改版方案
-*Collect. That's it.*
+export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI Agent 改版方案——Collect, that's it.
 
-> **收藏一下就够了。** 点一下收藏，薯管家帮你搞定剩下所有事——智能归类、自动沉淀、知识提炼、主动提醒。从"收藏就吃灰"到"收藏就够了"。
+「收藏」是人类面对信息洪流时的本能反应——在转瞬即逝中按下一个"留住"的按钮，仿佛为未来的自己埋下一枚回到此刻的锚点。然而锚点越埋越多，海面却早已换了方向。想用时找不到、过期了不知道、零散的信息无法转化为行动，收藏夹终于从「灵感花园」长成了「信息坟场」。
+
+「薯管家」是一位聪明的"懒人"管家，收藏夹的 AI Agent。点一下收藏，薯管家帮你搞定剩下所有事——智能归类、自动管理、对话沉淀、场景唤醒，让收藏易用、好用、有用、活用，灵感花园重新唤醒。
+
+从"收藏就吃灰"到"收藏一下就够了"，*Collect, that's it.*
 
 ---
 
@@ -32,10 +35,47 @@ export const productDocContent = `# 「薯管家」小红书收藏夹 AI Agent �
 - 「自动」「一键」「智能」→ 用户期待零操作成本
 - 「知识」「灵感」「消化」→ 收藏的本质是知识管理，不是存储
 
-**真实用户声音（小红书公开内容）：**
-- "总有一天能出个功能，每天推送一篇尘封多年的收藏夹里的帖子"
-- "收藏夹太多了，能不能帮忙整理所有？"
-- "小红书为什么不做 RAG"
+**真实用户声音（小红书公开帖子）：**
+
+用户不仅在吐槽——他们已经在**自己动手造工具**了：
+
+<div style="margin:16px 0;">
+<div style="font-size:12px;font-weight:600;color:#FF2442;margin-bottom:6px;">🔥 喊话产品团队</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<a href="https://xhslink.com/o/9qnyGvlIRDG" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">@小红书AI产品经理，点点为什么不打通笔记收藏</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">质问为什么 AI 能力不与收藏功能打通</div>
+</a>
+<a href="https://xhslink.com/o/2z14zQ0jne" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">小红书的产品经理，请你过来看一看</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">列举收藏夹核心体验缺陷</div>
+</a>
+</div>
+<div style="font-size:12px;font-weight:600;color:#FF8C00;margin-bottom:6px;">😫 用户痛点与诉求</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<a href="https://xhslink.com/o/bHSZbKl8K5" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">AI整理收藏夹！我的收藏夹内容实在是太多了</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">重度用户倾诉积压之痛，主动找 AI 方案</div>
+</a>
+<a href="https://xhslink.com/o/5vNltVwCGLn" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">需求背景：目前我在小红书的收藏夹功能...</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">用户写出需求文档级别的功能建议</div>
+</a>
+</div>
+<div style="font-size:12px;font-weight:600;color:#7C5CFC;margin-bottom:6px;">🛠 用户已经自己动手</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<a href="https://xhslink.com/o/9xIcBPDmpV1" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">一句话，让AI帮你整理落灰的收藏夹</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">借助 AI 对话工具整理多年收藏</div>
+</a>
+<a href="https://xhslink.com/o/Abe1f9GvrvH" target="_blank" style="display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;">
+<div style="font-weight:600;font-size:13px;color:#333;line-height:1.4;">收藏夹太乱？我写了个 skill 自动分类</div>
+<div style="color:#999;font-size:11px;margin-top:4px;">用点点 skill 开发收藏夹自动分类工具</div>
+</a>
+</div>
+</div>
+
+> 从"吐槽等官方"到"自己写 skill"——用户需求的迫切程度已经外溢到 UGC 自造工具阶段。
 
 **真实用户声音（微信私域反馈）：**
 
@@ -79,27 +119,28 @@ export const productDocContent = `# 「薯管家」小红书收藏夹 AI Agent �
 
 ### 1.4 现有方案都缺了什么
 
-| 方案 | 自动分类 | 智能总结 | 主动推送 | Agent 交互 |
-|------|----------|----------|----------|-----------|
-| 小红书现有 | — | — | — | — |
-| Pinterest | ✓ | — | — | — |
-| Readwise | — | ✓ | ✓ | — |
-| OPPO 小布记忆 | 部分 | — | — | — |
-| **薯管家** | **✓** | **✓** | **✓** | **✓** |
+| 方案 | 自动分类 | 智能总结 | 主动推送 | Agent 交互 | 局限性 |
+|------|----------|----------|----------|-----------|--------|
+| 小红书现有 | — | — | — | — | 仅支持手动专辑管理 |
+| Pinterest | ✓ | — | — | — | 分类粗粒度，不支持知识提取 |
+| Readwise | — | ✓ | ✓ | — | 定位读书笔记，不覆盖社区内容 |
+| OPPO 小布记忆 | 部分 | — | — | — | 仅限 OPPO 生态 |
+| 用户自建 skill | 部分 | — | — | — | 需技术背景，无法覆盖普通用户；分类逻辑简单，缺少知识提取和主动推送 |
+| **薯管家** | **✓** | **✓** | **✓** | **✓** | — |
 
-没有一个现有方案做到"基于收藏内容的 Agent 交互"。这是薯管家的差异化机会。
+当前的站外技术手段（用户自建 skill、AI 对话工具、浏览器插件等）证明了需求的真实性，但它们都停留在**单点能力**——要么只做分类，要么只做总结，没有一个方案做到"基于收藏内容的全链路 Agent 交互"。这是薯管家的差异化机会。
 
 ---
 
 ## 二、产品定位
 
-**Slogan**: 收藏一下就够了。 *Collect. That's it.*
+薯管家是小红书收藏夹的 **AI Agent**——一个聪明的懒人管家。*Collect. That's it.*
 
-薯管家是一个**聪明的懒人管家**：
-- **聪明**：能主动帮你沉淀知识、检测过期、生成攻略、发现品味相似的人
-- **懒人**：用户只需点一下收藏，剩下全交给 AI
-
-**核心逻辑：** 从"收藏就吃灰"到"收藏一下就够了"。用户只做"收藏"一个动作，薯管家自动完成 **存储 → 管理 → 应用 → 延伸** 的完整闭环。
+- **解决什么问题：** 收藏夹从"数字垃圾场"变成"个人知识库"。用户只做"收藏"一个动作，薯管家自动完成存储、管理、应用、延伸的完整闭环
+- **面向谁：** 所有有收藏习惯的小红书用户，尤其是收藏量 100+ 且从不整理的"囤积型"用户
+- **产品形态：** 嵌入小红书「我」页面的智能助手，以对话式交互 + 自动化推送为核心，不改变用户现有使用习惯
+- **技术定位：** 不是简单的分类工具，而是基于收藏内容的 Multi-Agent 系统——意图识别、工具调用、知识提取、Deep Research 全链路打通
+- **与现有功能的关系：** 不替代收藏夹，而是在其之上叠加智能层。用户仍然用原生收藏按钮，薯管家在后台静默工作
 
 ---
 
@@ -236,22 +277,27 @@ export const productDocContent = `# 「薯管家」小红书收藏夹 AI Agent �
 
 ## 四、功能需求总览
 
-| 旅程阶段 | 功能模块 | 子功能 | 状态 | 备注 |
-|----------|----------|--------|------|------|
-| Step 1 存储 | 智能收藏 | AI 推荐专辑（多选） | ✅ MVP | Demo 可体验 |
-| Step 2 管理 | 智能分类 | 一键 AI 分类 | ✅ MVP | Demo 可体验 |
-| Step 2 管理 | 智能分类 | A/B 用户分型 | 📐 设计完成 | Demo 展示 B 类路径 |
-| Step 2 管理 | 自动沉淀 | 自动打标签 | ✅ MVP | 展示 AI 多维标签 |
-| Step 2 管理 | 自动沉淀 | 时效性检测 | ✅ MVP | 按原因分组展示 |
-| Step 2 管理 | 自动沉淀 | RAG 知识库 | ✅ MVP | 结构化知识条目 |
-| Step 3 应用 | 对话式协同 | 薯管家对话 | ✅ MVP | 意图识别 + 工具调用 |
-| Step 3 应用 | 对话式协同 | 深度攻略生成 | ✅ MVP | Deep Research 5 步链路 |
-| Step 3 应用 | 数据链路 | 数据链路搭建 | ✅ 已完成 | 真实用户数据 pipeline |
-| Step 3 应用 | 数据链路 | Prompt Engineering | ✅ 已完成 | Multi-Agent 链路设计 |
-| Step 4 延伸 | 主动推送 | 收藏报告 / 体检 / 时光轴 | ✅ MVP | 动态 tab 展示 |
-| Step 4 延伸 | 收藏社交 | 品味匹配 | ✅ MVP | 匹配度 + 兴趣卡片 |
-| Step 4 延伸 | 场景激活 | 那年今日 / 兴趣共振 / 故地重游 | 📐 设计完成 | 三种触发机制 |
-| Step 4 延伸 | 主动推送 | 过期清理提醒 | 📐 设计完成 | 推送卡片 |
+<table style="width:100%;font-size:14px;border-collapse:collapse;">
+<thead><tr style="border-bottom:2px solid #e5e7eb;text-align:left;">
+<th style="white-space:nowrap;padding:8px 10px;">旅程阶段</th><th style="padding:8px 10px;">功能模块</th><th style="padding:8px 10px;">子功能</th><th style="padding:8px 10px;">状态</th><th style="padding:8px 10px;">备注</th>
+</tr></thead>
+<tbody>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 1 存储</td><td style="padding:6px 10px;">智能收藏</td><td style="padding:6px 10px;">AI 推荐专辑（多选）</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Demo 可体验</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">智能分类</td><td style="padding:6px 10px;">一键 AI 分类</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Demo 可体验</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">智能分类</td><td style="padding:6px 10px;">三类用户画像策略</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">多专辑少 / 多专辑多 / 少专辑少</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">自动打标签</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">展示 AI 多维标签</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">时效性检测</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">按原因分组展示</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">RAG 知识库</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">结构化知识条目</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">对话式协同</td><td style="padding:6px 10px;">薯管家对话</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">意图识别 + 工具调用</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">对话式协同</td><td style="padding:6px 10px;">深度攻略生成</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Deep Research 5 步链路</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">数据链路</td><td style="padding:6px 10px;">数据链路搭建</td><td style="padding:6px 10px;">✅ 已完成</td><td style="padding:6px 10px;">真实用户数据 pipeline</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">数据链路</td><td style="padding:6px 10px;">Prompt Engineering</td><td style="padding:6px 10px;">✅ 已完成</td><td style="padding:6px 10px;">Multi-Agent 链路设计</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">主动推送</td><td style="padding:6px 10px;">收藏报告 / 体检 / 时光轴</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">动态 tab 展示</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">收藏社交</td><td style="padding:6px 10px;">品味匹配</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">匹配度 + 兴趣卡片</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">场景激活</td><td style="padding:6px 10px;">那年今日 / 兴趣共振 / 故地重游</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">三种触发机制</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">主动推送</td><td style="padding:6px 10px;">过期清理提醒</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">推送卡片</td></tr>
+</tbody>
+</table>
 
 > **Demo 数据：** 60 条模拟笔记，覆盖美食、旅行、穿搭等 8 个品类，含可提取的实体信息。
 
@@ -355,7 +401,7 @@ export const productDocContent = `# 「薯管家」小红书收藏夹 AI Agent �
 
 ---
 
-## 八、完整 PE 展示
+## 八、让薯管家更聪明——PE 设计与数据生产
 
 薯管家的对话能力由多节点 PE（Prompt Engineering）链路驱动。薯管家方案设计了两条链路：React 链路（日常对话）和 Deep Research 链路（深度分析），共 10 个 Agent 节点。
 

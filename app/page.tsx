@@ -486,11 +486,11 @@ function TopNav() {
   return (
     <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 pt-14 pb-2">
       <button>
-        <Menu size={22} className="text-white drop-shadow-sm" />
+        <Menu size={22} className="text-[#333]" />
       </button>
       <div className="flex items-center gap-4">
         <button>
-          <Share2 size={20} className="text-white drop-shadow-sm" />
+          <Share2 size={20} className="text-[#333]" />
         </button>
       </div>
     </div>
@@ -500,21 +500,13 @@ function TopNav() {
 function ProfileSection() {
   return (
     <div className="relative">
-      {/* Cover photo extending behind profile info */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://picsum.photos/seed/coverphoto/800/400"
-          alt="封面"
-          className="w-full h-[420px] object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-white/90" />
-      </div>
+      {/* Warm gradient background extending behind profile info */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#FFE8D6] via-[#FFF0E6] to-white" />
 
-      {/* Spacer for cover photo visible area */}
-      <div className="h-[200px]" />
+      {/* Reduced top spacing */}
+      <div className="h-[100px]" />
 
-      {/* Profile info area - semi-transparent to show background */}
+      {/* Profile info area */}
       <div className="relative px-4 pb-4">
         {/* Avatar - overlapping the cover */}
         <div className="relative -mt-10 mb-3 flex items-end gap-3">
@@ -1157,16 +1149,7 @@ function TimelineSection() {
 function ManagerTab() {
   return (
     <div className="px-3 py-3 space-y-3">
-      {/* 1. 收藏社交 — 品味匹配 */}
-      <TasteMatchSection />
-
-      {/* 2. 收藏体检报告 */}
-      <HealthReportSection />
-
-      {/* 3. 收藏足迹时光轴 */}
-      <TimelineSection />
-
-      {/* 4. 薯管家消息 */}
+      {/* 1. 薯管家消息 */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="px-4 pt-3 pb-1">
           <h3 className="text-[14px] font-semibold text-[#333]">{'\uD83D\uDCEC'} 薯管家消息</h3>
@@ -1188,6 +1171,15 @@ function ManagerTab() {
           </motion.div>
         ))}
       </div>
+
+      {/* 2. 收藏社交 — 品味匹配 */}
+      <TasteMatchSection />
+
+      {/* 3. 收藏体检报告 */}
+      <HealthReportSection />
+
+      {/* 4. 收藏足迹时光轴 */}
+      <TimelineSection />
     </div>
   );
 }
@@ -1862,6 +1854,7 @@ interface ChatMessage {
   content: string;
   toolUse?: ToolUseInfo;
   chain?: ChainStep[];
+  organizeAction?: boolean;
 }
 
 // ---- Inline Chat View ----
@@ -1872,12 +1865,14 @@ function InlineChatView({
   onSend,
   onClose,
   onNoteTap,
+  onOrganize,
 }: {
   messages: ChatMessage[];
   isLoading: boolean;
   onSend: (text: string) => void;
   onClose: () => void;
   onNoteTap?: (noteId: string) => void;
+  onOrganize?: () => void;
 }) {
   const [inputValue, setInputValue] = useState('');
   const [expandedTools, setExpandedTools] = useState<Set<number>>(new Set());
@@ -2014,6 +2009,14 @@ function InlineChatView({
                     <div className="text-[13px] text-[#333333] leading-relaxed whitespace-pre-line prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0.5 prose-headings:my-2 prose-strong:text-[#333333]">
                       <Markdown>{msg.content}</Markdown>
                     </div>
+                  )}
+                  {msg.organizeAction && onOrganize && (
+                    <button
+                      onClick={onOrganize}
+                      className="mt-3 w-full py-2.5 rounded-xl text-[14px] font-semibold text-white bg-gradient-to-r from-[#FF2442] to-[#FF6B81] active:scale-[0.98] transition-transform"
+                    >
+                      ✨ 开始整理收藏夹
+                    </button>
                   )}
                   {msg.toolUse && (
                     <div className="mt-2">
@@ -2548,10 +2551,19 @@ export default function Home() {
 
   const handleToolAction = useCallback((action: { tool: string; input: Record<string, unknown>; result: string }) => {
     if (action.tool === 'organize_favorites') {
-      setTimeout(() => {
-        setChatMode(false);
-        handleOrganizeRef.current();
-      }, 1500);
+      // Don't abruptly close chat — show a friendly reply with action button
+      setChatMessages((prev) => {
+        const updated = [...prev];
+        const lastIdx = updated.length - 1;
+        if (lastIdx >= 0 && updated[lastIdx].role === 'assistant') {
+          updated[lastIdx] = {
+            ...updated[lastIdx],
+            content: '好的！我来帮你整理收藏夹 ✨\n\n我会分析你的全部收藏，按内容自动归类到不同专辑。整理过程大约需要几秒钟，整理完成后你可以查看分类结果。\n\n点击下方按钮开始整理吧👇',
+            organizeAction: true,
+          };
+        }
+        return updated;
+      });
     }
   }, []);
 
@@ -2845,6 +2857,10 @@ export default function Home() {
               onNoteTap={(noteId) => {
                 const note = mockNotes.find((n) => n.id === noteId);
                 if (note) setSelectedNote(note);
+              }}
+              onOrganize={() => {
+                setChatMode(false);
+                setTimeout(() => handleOrganizeRef.current(), 300);
               }}
             />
             <div className="flex-shrink-0">
