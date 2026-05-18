@@ -657,8 +657,9 @@ function SecondaryTabs({
     { label: '📮 动态', count: null },
     { label: '📚 知识库', count: null },
     { label: '笔记', count: 286 },
-    { label: '收藏', count: 286 },
-    { label: '赞过', count: 102 },
+    { label: '评论', count: 102 },
+    { label: '话题', count: null },
+    { label: '文件', count: null },
   ];
 
   return (
@@ -2814,8 +2815,7 @@ export default function Home() {
             <div className="bg-xhs-divider min-h-[50vh]">
               {activeSecondaryTab === '📮 动态' && <ManagerTab />}
               {activeSecondaryTab === '📚 知识库' && <KnowledgeBaseTab />}
-              {activeSecondaryTab === '收藏' && <ManagerTab />}
-              {activeSecondaryTab === '赞过' && <SavedCommentsTab />}
+              {activeSecondaryTab === '评论' && <SavedCommentsTab />}
               {activeSecondaryTab === '笔记' && (
               <>
                 <AnimatePresence>
