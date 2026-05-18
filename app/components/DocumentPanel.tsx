@@ -92,7 +92,14 @@ function headingId(text: string): string {
 interface TocItem {
   level: 'h2' | 'h3';
   text: string;
+  displayText: string;
   id: string;
+}
+
+// Truncate after " — " or " - " for cleaner TOC display
+function tocDisplayText(text: string): string {
+  const dash = text.search(/\s[—\-]\s/);
+  return dash > 0 ? text.slice(0, dash) : text;
 }
 
 function parseToc(markdown: string): TocItem[] {
@@ -109,13 +116,13 @@ function parseToc(markdown: string): TocItem[] {
     const h2Match = line.match(/^## (.+)$/);
     if (h2Match) {
       const text = h2Match[1].trim();
-      items.push({ level: 'h2', text, id: headingId(text) });
+      items.push({ level: 'h2', text, displayText: tocDisplayText(text), id: headingId(text) });
       continue;
     }
     const h3Match = line.match(/^### (.+)$/);
     if (h3Match) {
       const text = h3Match[1].trim();
-      items.push({ level: 'h3', text, id: headingId(text) });
+      items.push({ level: 'h3', text, displayText: tocDisplayText(text), id: headingId(text) });
     }
   }
   return items;
@@ -251,7 +258,7 @@ export default function DocumentPanel() {
                     `}
                     title={item.text}
                   >
-                    <span className="line-clamp-2">{item.text}</span>
+                    <span className="line-clamp-2">{item.displayText}</span>
                   </button>
                 </li>
               );

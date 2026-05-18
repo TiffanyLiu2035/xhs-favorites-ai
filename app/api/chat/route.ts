@@ -617,6 +617,22 @@ async function runDirectReply(message: string): Promise<string> {
   return extractText(data) || '你好呀～有什么收藏相关的事情我可以帮你吗？📚';
 }
 
+// ---------- Simple chat detection (skip Intent + React chain) ----------
+
+const CHAT_PATTERNS = [
+  /^(你好|hi|hello|hey|嗨|哈喽|在吗|在不在)/i,
+  /^(你是谁|你叫什么|你能做什么|你会什么|有什么功能)/,
+  /^(谢谢|感谢|好的|收到|知道了|明白|ok|好哒|嗯嗯)/i,
+  /^(早上好|晚上好|下午好|早安|晚安)/,
+  /^.{0,8}(吗|呢|吧|啊|哦|呀)[？?！!。]*$/,
+];
+
+function isSimpleChat(msg: string): boolean {
+  const trimmed = msg.trim();
+  if (trimmed.length <= 15 && CHAT_PATTERNS.some((p) => p.test(trimmed))) return true;
+  return false;
+}
+
 // ---------- API Route ----------
 
 export async function POST(request: NextRequest) {
@@ -632,6 +648,19 @@ export async function POST(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
+        // Fast path: simple chat — skip Intent + React, 1 LLM call only
+        if (isSimpleChat(message)) {
+          const chatIntent: IntentResult = { intent: 'chat', params: {}, reasoning: '日常对话' };
+          chain.push({ node: 'intent', result: chatIntent });
+          controller.enqueue(encoder.encode(sseEncode('chain_step', { node: 'intent', result: chatIntent })));
+
+          const reply = await runDirectReply(message);
+          chain.push({ node: 'report', result: { reply, direct: true } });
+          controller.enqueue(encoder.encode(sseEncode('done', { reply, chain })));
+          controller.close();
+          return;
+        }
+
         // Node 1: Intent Agent
         const { step: intentStep, intent } = await runIntentNode(message);
         chain.push(intentStep);
