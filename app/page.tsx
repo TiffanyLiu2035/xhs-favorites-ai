@@ -1863,6 +1863,7 @@ interface ChatMessage {
   expiredAction?: boolean;
   expiredProcessing?: boolean;
   expiredDone?: boolean;
+  expiredNoteIds?: string[];
 }
 
 // ---- Inline Chat View ----
@@ -1875,6 +1876,7 @@ function InlineChatView({
   onNoteTap,
   onOrganize,
   onViewOrganizeResult,
+  allNotes,
 }: {
   messages: ChatMessage[];
   isLoading: boolean;
@@ -1883,6 +1885,7 @@ function InlineChatView({
   onNoteTap?: (noteId: string) => void;
   onOrganize?: () => void;
   onViewOrganizeResult?: () => void;
+  allNotes?: typeof mockNotes;
 }) {
   const [inputValue, setInputValue] = useState('');
   const [expandedTools, setExpandedTools] = useState<Set<number>>(new Set());
@@ -2031,6 +2034,47 @@ function InlineChatView({
                       <Markdown>{msg.content}</Markdown>
                     </div>
                   )}
+                  {msg.expiredDone && msg.expiredNoteIds && msg.expiredNoteIds.length > 0 && allNotes && (() => {
+                    const notes = msg.expiredNoteIds!.map((id) => allNotes.find((n) => n.id === id)).filter(Boolean) as typeof allNotes;
+                    const groups: Record<string, typeof allNotes> = {};
+                    for (const note of notes) {
+                      const reason = note.expiredReason || '其他';
+                      let category = '其他';
+                      if (/活动|促销|限时|双11|打折|满减/.test(reason)) category = '促销活动已结束';
+                      else if (/停业|关闭|下架/.test(reason)) category = '店铺/商品已下架';
+                      else if (/季节|趋势|过时|春夏|秋冬/.test(reason)) category = '时效性内容已过时';
+                      else if (/春节|圣诞|节日/.test(reason)) category = '节日活动已结束';
+                      if (!groups[category]) groups[category] = [];
+                      groups[category].push(note);
+                    }
+                    const icons: Record<string, string> = { '促销活动已结束': '🏷️', '店铺/商品已下架': '🏪', '时效性内容已过时': '📅', '节日活动已结束': '🎉', '其他': '📌' };
+                    return (
+                      <div className="mt-2">
+                        {Object.entries(groups).map(([cat, gNotes]) => (
+                          <div key={cat} className="mb-3">
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <span className="text-[12px]">{icons[cat] || '📌'}</span>
+                              <span className="text-[12px] font-medium text-[#333]">{cat}</span>
+                              <span className="text-[10px] text-[#999]">({gNotes.length})</span>
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              {gNotes.map((note) => (
+                                <div key={note.id} className="flex gap-2.5 bg-[#FFF8F5] rounded-lg p-2 cursor-pointer hover:bg-[#FFF0EA] transition-colors border border-[#FFE8DD]" onClick={() => onNoteTap?.(note.id)}>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={note.coverUrl} alt={note.title} className="w-[56px] h-[56px] rounded-md object-cover flex-shrink-0" loading="lazy" />
+                                  <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                    <p className="text-[12px] text-[#333] leading-tight line-clamp-2 font-medium">{note.title}</p>
+                                    <p className="text-[10px] text-[#FF6B81] mt-1">{note.expiredReason || '已失效'}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                        <div className="text-[12px] text-[#999] mt-2">建议清理这些内容，保持收藏夹新鲜度 ✨</div>
+                      </div>
+                    );
+                  })()}
                   {msg.organizeAction && onOrganize && !msg.organizeProcessing && !msg.organizeDone && (
                     <button
                       onClick={onOrganize}
@@ -2413,7 +2457,7 @@ export default function Home() {
           expiredAction: true,
         },
       ]);
-      // Show processing animation
+      // Show done with note cards after animation
       setTimeout(() => {
         setChatMessages((prev) => {
           const updated = [...prev];
@@ -2422,10 +2466,11 @@ export default function Home() {
             updated[lastIdx] = {
               ...updated[lastIdx],
               content: expiredNotes.length > 0
-                ? `🔍 检测完成！发现 **${expiredNotes.length}** 条可能过期的收藏：\n${expiredNotes.slice(0, 5).map((n) => `• ${n.title}（${n.expiredReason || '已失效'}）`).join('\n')}\n\n建议清理这些内容，保持收藏夹新鲜度 ✨`
+                ? `🔍 检测完成！发现 **${expiredNotes.length}** 条可能过期的收藏：`
                 : '✅ 你的收藏内容都还有效，暂未检测到过期内容！',
               expiredProcessing: false,
               expiredDone: true,
+              expiredNoteIds: expiredNotes.map((n) => n.id),
             };
           }
           return updated;
@@ -2988,6 +3033,7 @@ export default function Home() {
                 setChatMode(false);
                 setTimeout(() => handleOrganizeRef.current(), 300);
               }}
+              allNotes={mockNotes}
             />
             <div className="flex-shrink-0">
               <BottomNav activeTab={activeBottomTab} onTabChange={setActiveBottomTab} />
