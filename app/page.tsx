@@ -2816,6 +2816,8 @@ export default function Home() {
               {activeSecondaryTab === '📮 动态' && <ManagerTab />}
               {activeSecondaryTab === '📚 知识库' && <KnowledgeBaseTab />}
               {activeSecondaryTab === '评论' && <SavedCommentsTab />}
+              {activeSecondaryTab === '话题' && <SavedTopicsTab />}
+              {activeSecondaryTab === '文件' && <SavedFilesTab />}
               {activeSecondaryTab === '笔记' && (
               <>
                 <AnimatePresence>
