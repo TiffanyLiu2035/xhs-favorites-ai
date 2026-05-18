@@ -304,7 +304,6 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 </tbody>
 </table>
 
-> **Demo 数据：** 60 条模拟笔记，覆盖美食、旅行、穿搭等 8 个品类，含可提取的实体信息。
 
 ---
 
