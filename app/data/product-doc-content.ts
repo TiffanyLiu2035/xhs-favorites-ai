@@ -1168,7 +1168,7 @@ Agent 生产标注样本 → 质量校验 → 去重合版 → 版本管理(YAML
 
 **技术栈：** Next.js + React + Tailwind CSS + TypeScript + Framer Motion + SSE 流式响应
 
-**API 接入：** Claude API（Anthropic），支持多轮对话、意图识别、工具调用（Function Calling）和深度分析链路
+**API 接入：** Claude API（Anthropic），模型 claude-opus-4-6
 
 **Demo 数据：** 60 条模拟笔记，覆盖美食、旅行、穿搭等 8 个品类，含过期笔记、多维标签和可提取实体。
 
