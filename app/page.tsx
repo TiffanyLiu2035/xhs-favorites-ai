@@ -1858,6 +1858,11 @@ interface ChatMessage {
   toolUse?: ToolUseInfo;
   chain?: ChainStep[];
   organizeAction?: boolean;
+  organizeProcessing?: boolean;
+  organizeDone?: boolean;
+  expiredAction?: boolean;
+  expiredProcessing?: boolean;
+  expiredDone?: boolean;
 }
 
 // ---- Inline Chat View ----
@@ -1869,6 +1874,7 @@ function InlineChatView({
   onClose,
   onNoteTap,
   onOrganize,
+  onViewOrganizeResult,
 }: {
   messages: ChatMessage[];
   isLoading: boolean;
@@ -1876,6 +1882,7 @@ function InlineChatView({
   onClose: () => void;
   onNoteTap?: (noteId: string) => void;
   onOrganize?: () => void;
+  onViewOrganizeResult?: () => void;
 }) {
   const [inputValue, setInputValue] = useState('');
   const [expandedTools, setExpandedTools] = useState<Set<number>>(new Set());
@@ -2002,10 +2009,21 @@ function InlineChatView({
                   );
                 })()}
                 <div className="bg-white rounded-2xl rounded-tl-md px-3.5 py-2.5 shadow-sm">
-                  {!msg.content && (!msg.chain || msg.chain.length === 0) && (
+                  {!msg.content && (!msg.chain || msg.chain.length === 0) && !msg.expiredProcessing && (
                     <div className="flex items-center gap-2">
                       <Loader2 size={14} className="text-[#FF2442] animate-spin" />
                       <span className="text-xs text-[#999999]">薯管家思考中...</span>
+                    </div>
+                  )}
+                  {msg.expiredProcessing && !msg.expiredDone && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Loader2 size={14} className="text-[#FF2442] animate-spin" />
+                        <span className="text-[13px] text-[#666]">正在扫描收藏内容时效性...</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-[#FF2442] to-[#FF6B81] rounded-full animate-pulse" style={{ width: '70%' }} />
+                      </div>
                     </div>
                   )}
                   {msg.content && (
@@ -2013,13 +2031,35 @@ function InlineChatView({
                       <Markdown>{msg.content}</Markdown>
                     </div>
                   )}
-                  {msg.organizeAction && onOrganize && (
+                  {msg.organizeAction && onOrganize && !msg.organizeProcessing && !msg.organizeDone && (
                     <button
                       onClick={onOrganize}
                       className="mt-3 w-full py-2.5 rounded-xl text-[14px] font-semibold text-white bg-gradient-to-r from-[#FF2442] to-[#FF6B81] active:scale-[0.98] transition-transform"
                     >
                       ✨ 开始整理收藏夹
                     </button>
+                  )}
+                  {msg.organizeProcessing && (
+                    <div className="mt-3 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Loader2 size={14} className="text-[#FF2442] animate-spin" />
+                        <span className="text-[13px] text-[#666]">正在分析你的收藏内容...</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-[#FF2442] to-[#FF6B81] rounded-full animate-pulse" style={{ width: '60%' }} />
+                      </div>
+                    </div>
+                  )}
+                  {msg.organizeDone && (
+                    <div className="mt-3 space-y-2">
+                      <div className="text-[13px] text-[#333]">✅ 整理完成！已将收藏自动归类到不同专辑</div>
+                      <button
+                        onClick={onViewOrganizeResult}
+                        className="w-full py-2.5 rounded-xl text-[14px] font-semibold text-white bg-gradient-to-r from-[#FF2442] to-[#FF6B81] active:scale-[0.98] transition-transform"
+                      >
+                        📂 查看整理结果
+                      </button>
+                    </div>
                   )}
                   {msg.toolUse && (
                     <div className="mt-2">
@@ -2189,7 +2229,7 @@ export default function Home() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: '嗨～我是薯管家，你的收藏助手！\n\n我可以帮你：\n- 智能整理收藏夹\n- 按主题归类笔记\n- 发现过期或重复内容\n- 生成收藏摘要\n\n有什么需要帮忙的吗？',
+      content: '嗨～我是薯管家，你的收藏助手！我可以帮你：\n📂 智能整理收藏夹\n🏷️ 按主题归类笔记\n🔍 搜索和发现过期内容\n📝 生成收藏摘要\n有什么需要帮忙的吗？😊',
     },
   ]);
   const [chatLoading, setChatLoading] = useState(false);
@@ -2342,8 +2382,9 @@ export default function Home() {
     return () => scrollContainer!.removeEventListener('scroll', handleScroll);
   }, [bubblesHandled, welcomeCardVisible]);
 
-  // Pattern match for organize intent — skip LLM, show button directly
+  // Pattern match for deterministic actions — skip LLM
   const ORGANIZE_PATTERNS = /整理|归类|分类|帮我理一下|收拾一下/;
+  const EXPIRED_PATTERNS = /过期|失效|过时|无效|下架|清理/;
 
   const sendChatMessage = useCallback(async (text: string) => {
     setChatMessages((prev) => [...prev, { role: 'user', content: text }]);
@@ -2354,10 +2395,53 @@ export default function Home() {
         ...prev,
         {
           role: 'assistant',
-          content: '好的！我来帮你整理收藏夹 ✨\n\n我会分析你的全部收藏，按内容自动归类到不同专辑。点击下方按钮开始整理吧👇',
+          content: '好的！我来帮你整理收藏夹 ✨\n我会分析全部收藏，按内容自动归类到不同专辑，点击下方按钮开始吧👇',
           organizeAction: true,
         },
       ]);
+      return;
+    }
+
+    // ---- 过期检测：确定性操作，不走 LLM ----
+    if (EXPIRED_PATTERNS.test(text)) {
+      const expiredNotes = mockNotes.filter((n) => n.isExpired);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: '',
+          expiredAction: true,
+        },
+      ]);
+      // Show processing animation
+      setTimeout(() => {
+        setChatMessages((prev) => {
+          const updated = [...prev];
+          const lastIdx = updated.findLastIndex((m) => m.role === 'assistant' && m.expiredAction);
+          if (lastIdx >= 0) {
+            updated[lastIdx] = {
+              ...updated[lastIdx],
+              content: expiredNotes.length > 0
+                ? `🔍 检测完成！发现 **${expiredNotes.length}** 条可能过期的收藏：\n${expiredNotes.slice(0, 5).map((n) => `• ${n.title}（${n.expiredReason || '已失效'}）`).join('\n')}\n\n建议清理这些内容，保持收藏夹新鲜度 ✨`
+                : '✅ 你的收藏内容都还有效，暂未检测到过期内容！',
+              expiredProcessing: false,
+              expiredDone: true,
+            };
+          }
+          return updated;
+        });
+      }, 2500);
+      // Set processing state
+      setTimeout(() => {
+        setChatMessages((prev) => {
+          const updated = [...prev];
+          const lastIdx = updated.findLastIndex((m) => m.role === 'assistant' && m.expiredAction);
+          if (lastIdx >= 0) {
+            updated[lastIdx] = { ...updated[lastIdx], expiredProcessing: true };
+          }
+          return updated;
+        });
+      }, 0);
       return;
     }
 
@@ -2879,6 +2963,28 @@ export default function Home() {
                 if (note) setSelectedNote(note);
               }}
               onOrganize={() => {
+                // Step 1: show processing animation
+                setChatMessages((prev) => {
+                  const updated = [...prev];
+                  const lastAssistantIdx = updated.findLastIndex((m) => m.role === 'assistant' && m.organizeAction);
+                  if (lastAssistantIdx >= 0) {
+                    updated[lastAssistantIdx] = { ...updated[lastAssistantIdx], organizeProcessing: true };
+                  }
+                  return updated;
+                });
+                // Step 2: after animation, show done + jump button
+                setTimeout(() => {
+                  setChatMessages((prev) => {
+                    const updated = [...prev];
+                    const lastAssistantIdx = updated.findLastIndex((m) => m.role === 'assistant' && m.organizeAction);
+                    if (lastAssistantIdx >= 0) {
+                      updated[lastAssistantIdx] = { ...updated[lastAssistantIdx], organizeProcessing: false, organizeDone: true };
+                    }
+                    return updated;
+                  });
+                }, 3000);
+              }}
+              onViewOrganizeResult={() => {
                 setChatMode(false);
                 setTimeout(() => handleOrganizeRef.current(), 300);
               }}
