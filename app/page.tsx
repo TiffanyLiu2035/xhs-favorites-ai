@@ -486,11 +486,11 @@ function TopNav() {
   return (
     <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 pt-14 pb-2">
       <button>
-        <Menu size={22} className="text-[#333]" />
+        <Menu size={22} className="text-white drop-shadow-sm" />
       </button>
       <div className="flex items-center gap-4">
         <button>
-          <Share2 size={20} className="text-[#333]" />
+          <Share2 size={20} className="text-white drop-shadow-sm" />
         </button>
       </div>
     </div>
@@ -500,18 +500,23 @@ function TopNav() {
 function ProfileSection() {
   return (
     <div className="relative">
-      {/* Warm gradient background extending behind profile info */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#FFE8D6] via-[#FFF0E6] to-white" />
-
-      {/* Reduced top spacing */}
-      <div className="h-[100px]" />
+      {/* Cover photo */}
+      <div className="relative h-[200px] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://picsum.photos/seed/coverphoto/800/400"
+          alt="封面"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+      </div>
 
       {/* Profile info area */}
-      <div className="relative px-4 pb-4">
-        {/* Avatar - overlapping the cover */}
-        <div className="relative -mt-10 mb-3 flex items-end gap-3">
+      <div className="relative px-4 pb-4 bg-gradient-to-b from-[#F8F4F0] to-white">
+        {/* Avatar + Name row */}
+        <div className="flex items-end gap-4 -mt-12 mb-2">
           <div className="relative flex-shrink-0">
-            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-[3px] border-white shadow-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://picsum.photos/seed/myavatar/200/200"
@@ -519,26 +524,24 @@ function ProfileSection() {
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Blue plus button */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-[#2196F3] border-2 border-white flex items-center justify-center">
+            {/* Yellow plus button */}
+            <div className="absolute -bottom-0.5 right-0 w-5 h-5 rounded-full bg-[#FFD700] border-2 border-white flex items-center justify-center">
               <Plus size={10} className="text-white" strokeWidth={3} />
             </div>
           </div>
-          <div className="pb-1">
-            <h1 className="text-lg font-bold text-xhs-text leading-tight">Tutuphus 🐰</h1>
+          <div className="pb-2 flex-1 min-w-0">
+            <h1 className="text-[20px] font-bold text-xhs-text leading-tight">Tutuphus 🐰</h1>
+            <div className="flex items-center gap-3 text-[11px] text-xhs-secondary mt-1">
+              <span className="flex items-center gap-0.5">
+                小红书号：123456789
+                <Copy size={9} className="text-xhs-secondary" />
+              </span>
+              <span className="flex items-center gap-0.5">
+                IP属地：上海
+                <Info size={9} className="text-xhs-secondary" />
+              </span>
+            </div>
           </div>
-        </div>
-
-        {/* XHS ID and IP */}
-        <div className="flex items-center gap-3 text-xs text-xhs-secondary mb-2">
-          <span className="flex items-center gap-1">
-            小红书号：123456789
-            <Copy size={10} className="text-xhs-secondary" />
-          </span>
-          <span className="flex items-center gap-1">
-            IP属地：上海
-            <Info size={10} className="text-xhs-secondary" />
-          </span>
         </div>
 
         {/* Bio */}
@@ -546,12 +549,12 @@ function ProfileSection() {
           目标：努力工作赚钱，去读心理学二硕 🌈
         </p>
 
-        {/* Tags */}
+        {/* Tags - semi-transparent */}
         <div className="flex items-center gap-2 mb-4 flex-wrap">
           {['♀ 25 岁', '英国英格兰', '帝国理工学院'].map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 rounded-full text-[11px] text-xhs-secondary bg-[#F5F5F5]"
+              className="px-2.5 py-1 rounded-full text-[11px] text-[#999] bg-black/[0.04]"
             >
               {tag}
             </span>

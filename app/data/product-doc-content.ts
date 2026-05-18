@@ -1,18 +1,18 @@
 export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI Agent 改版方案——Collect, that's it.
 
-「收藏」是人类面对信息洪流时的本能反应——在转瞬即逝中按下一个"留住"的按钮，仿佛为未来的自己埋下一枚回到此刻的锚点。然而锚点越埋越多，海面却早已换了方向。想用时找不到、过期了不知道、零散的信息无法转化为行动，收藏夹终于从「灵感花园」长成了「信息坟场」。
-
-「薯管家」是一位聪明的"懒人"管家，收藏夹的 AI Agent。点一下收藏，薯管家帮你搞定剩下所有事——智能归类、自动管理、对话沉淀、场景唤醒，让收藏易用、好用、有用、活用，灵感花园重新唤醒。
-
-从"收藏就吃灰"到"收藏一下就够了"，*Collect, that's it.*
+> 「收藏」是人类面对信息洪流时的本能反应——在转瞬即逝中按下一个"留住"的按钮，仿佛为未来的自己埋下一枚回到此刻的锚点。然而锚点越埋越多，海面却早已换了方向。想用时找不到、过期了不知道、零散的信息无法转化为行动，收藏夹终于从「灵感花园」长成了「信息坟场」。
+>
+> 「薯管家」是一位聪明的"懒人"管家，收藏夹的 AI Agent。点一下收藏，薯管家帮你搞定剩下所有事——智能归类、自动管理、对话沉淀、场景唤醒，让收藏易用、好用、有用、活用，灵感花园重新唤醒。
+>
+> 从「只要收藏就“吃灰”」到「收藏一下就够了」，*Collect, that's it.*
 
 ---
 
-## 一、为什么要做这件事
+## 一、从需求出发
 
-### 1.1 核心痛点：收藏就吃灰
+### 1.1 核心痛点：收了存不住，找了用不上
 
-小红书用户的收藏行为可以用四个字概括——**收了就忘**。问题贯穿「收→存→找→用」全链路：
+小红书用户的收藏行为贯穿「收→存→找→用」全链路：
 
 1. **收的时候嫌麻烦：** 收藏时需要手动选择或新建专辑，步骤多、耐心少，大量笔记直接扔进"默认收藏"
 2. **存了之后不整理：** 看到有用就收，但几乎不会回头分类，收藏夹变成"数字仓库"
@@ -23,11 +23,13 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 
 ### 1.2 用户在说什么
 
-通过 15 篇相关笔记及 200+ 条评论的 NLP 词云分析：
+**NLP 词云分析：**
+
+通过 15 篇相关笔记及 200+ 条评论的词云分析：
 
 <figure style="margin:0;text-align:center;">
 <img src="/wordcloud.png" style="width:100%;border-radius:8px;" alt="收藏功能用户舆情词云" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">数据来源：小红书公开内容，2026年5月</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">数据来源：小红书公开内容，2026年5月</figcaption>
 </figure>
 
 - 「分类」「整理」为最高频词 → 用户渴望智能分类
@@ -35,9 +37,9 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 - 「自动」「一键」「智能」→ 用户期待零操作成本
 - 「知识」「灵感」「消化」→ 收藏的本质是知识管理，不是存储
 
-**真实用户声音（小红书公开帖子）：**
+**小红书公域帖子：**
 
-用户不仅在吐槽——他们已经在**自己动手造工具**了：
+> 从"吐槽等官方"到"自己写 skill"——用户需求的迫切程度已经外溢到 UGC 自造工具阶段：
 
 <div style="margin:16px 0;">
 <div style="font-size:12px;font-weight:600;color:#FF2442;margin-bottom:6px;">🔥 喊话产品团队</div>
@@ -75,26 +77,24 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 </div>
 </div>
 
-> 从"吐槽等官方"到"自己写 skill"——用户需求的迫切程度已经外溢到 UGC 自造工具阶段。
-
-**真实用户声音（微信私域反馈）：**
+**微信私域反馈：**
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
 <figure style="margin:0;text-align:center;">
 <img src="/wechat-feedback.webp" alt="点点AI用户群反馈" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">来源：点点 AI 种子用户群</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">来源：点点 AI 种子用户群</figcaption>
 </figure>
 <figure style="margin:0;text-align:center;">
 <img src="/wechat-feedback-2.webp" alt="用户访谈语音转文字" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">来源：身边小红书用户访谈</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">来源：身边小红书用户访谈</figcaption>
 </figure>
 <figure style="margin:0;text-align:center;">
 <img src="/wechat-feedback-3.webp" alt="用户访谈对话" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">来源：身边小红书用户访谈</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">来源：身边小红书用户访谈</figcaption>
 </figure>
 <figure style="margin:0;text-align:center;">
 <img src="/wechat-feedback-4.webp" alt="用户访谈对话" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">来源：身边小红书用户访谈</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">来源：身边小红书用户访谈</figcaption>
 </figure>
 </div>
 
@@ -109,7 +109,7 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 > - **管理体验亟待优化：** 批量操作、自定义排序、收藏夹内搜索等基础功能缺失
 > - **从"存"到"用"：** 用户需要的不仅是存储空间，更是能将信息转化为行动和知识的工具
 
-**[点点 AI（Deep Research）](https://www.askdiandian.com/dr/a5c1a24e54d1870dfc2f021b9af72732f95d02aa324c21215974f76ce5d167df/4671766862122135555?themeType=light&target=copy)**：
+**[点点 AI Deep Research](https://www.askdiandian.com/dr/a5c1a24e54d1870dfc2f021b9af72732f95d02aa324c21215974f76ce5d167df/4671766862122135555?themeType=light&target=copy)**：
 
 > 小红书的收藏夹功能正面临严重的用户信任危机。海量用户因排序混乱、搜索失效、操作繁琐等核心痛点，导致收藏内容大量"吃灰"。用户的真实需求已从简单的"收藏"升级为构建个人知识体系的"知识管理"，而现有功能与这一期待存在巨大鸿沟。
 
@@ -119,14 +119,14 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 
 ### 1.4 现有方案都缺了什么
 
-| 方案 | 自动分类 | 智能总结 | 主动推送 | Agent 交互 | 局限性 |
-|------|----------|----------|----------|-----------|--------|
-| 小红书现有 | — | — | — | — | 仅支持手动专辑管理 |
-| Pinterest | ✓ | — | — | — | 分类粗粒度，不支持知识提取 |
-| Readwise | — | ✓ | ✓ | — | 定位读书笔记，不覆盖社区内容 |
-| OPPO 小布记忆 | 部分 | — | — | — | 仅限 OPPO 生态 |
-| 用户自建 skill | 部分 | — | — | — | 需技术背景，无法覆盖普通用户；分类逻辑简单，缺少知识提取和主动推送 |
-| **薯管家** | **✓** | **✓** | **✓** | **✓** | — |
+| 方案 | 自动分类 | 智能总结 | 主动推送 | Agent 交互 | 技术门槛 | 局限性 |
+|------|----------|----------|----------|-----------|----------|--------|
+| 小红书现有 | — | — | — | — | 无 | 仅支持手动专辑管理 |
+| Pinterest | ✓ | — | — | — | 无 | 分类粗粒度，不支持知识提取 |
+| Readwise | — | ✓ | ✓ | — | 低 | 定位读书笔记，不覆盖社区内容 |
+| OPPO 小布记忆 | 部分 | — | — | — | 无 | 仅限 OPPO 生态 |
+| 用户自建 skill | 部分 | — | — | — | 高（需编程） | 无法覆盖普通用户；分类逻辑简单，缺少知识提取和主动推送 |
+| **薯管家** | **✓** | **✓** | **✓** | **✓** | **无** | — |
 
 当前的站外技术手段（用户自建 skill、AI 对话工具、浏览器插件等）证明了需求的真实性，但它们都停留在**单点能力**——要么只做分类，要么只做总结，没有一个方案做到"基于收藏内容的全链路 Agent 交互"。这是薯管家的差异化机会。
 
@@ -136,10 +136,10 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 
 薯管家是小红书收藏夹的 **AI Agent**——一个聪明的懒人管家。*Collect. That's it.*
 
-- **解决什么问题：** 收藏夹从"数字垃圾场"变成"个人知识库"。用户只做"收藏"一个动作，薯管家自动完成存储、管理、应用、延伸的完整闭环
+- **解决什么问题：** 收藏夹从"信息坟场"变成"个人知识库"。用户只做"收藏"一个动作，薯管家自动完成存储、管理、应用、延伸的完整闭环
 - **面向谁：** 所有有收藏习惯的小红书用户，尤其是收藏量 100+ 且从不整理的"囤积型"用户
 - **产品形态：** 嵌入小红书「我」页面的智能助手，以对话式交互 + 自动化推送为核心，不改变用户现有使用习惯
-- **技术定位：** 不是简单的分类工具，而是基于收藏内容的 Multi-Agent 系统——意图识别、工具调用、知识提取、Deep Research 全链路打通
+- **技术定位：** 不是简单的分类工具，而是基于收藏内容的 Multi-Agent 系统——意图识别、工具调用、知识提取、React与Deep Research 全链路打通
 - **与现有功能的关系：** 不替代收藏夹，而是在其之上叠加智能层。用户仍然用原生收藏按钮，薯管家在后台静默工作
 
 ---
@@ -176,15 +176,15 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;">
 <figure style="margin:0;text-align:center;">
 <img src="/user-type-b.webp" alt="收藏多专辑少" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">收藏多 · 专辑少（4486 篇）<br/>大量内容堆在默认收藏</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">收藏多 · 专辑少（4486 篇）<br/>大量内容堆在默认收藏</figcaption>
 </figure>
 <figure style="margin:0;text-align:center;">
 <img src="/user-type-a.webp" alt="收藏多专辑多" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">收藏多 · 专辑多（3322 篇）<br/>已有分类体系但不够精细</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">收藏多 · 专辑多（3322 篇）<br/>已有分类体系但不够精细</figcaption>
 </figure>
 <figure style="margin:0;text-align:center;">
 <img src="/user-type-c.webp" alt="收藏少专辑少" style="width:100%;border-radius:8px;border:1px solid #e5e7eb;" />
-<figcaption style="font-size:12px;color:#888;margin-top:4px;">收藏少 · 专辑少（55 篇）<br/>轻量使用，尚未养成整理习惯</figcaption>
+<figcaption style="font-size:11px;color:#aaa;margin-top:12px;letter-spacing:0.5px;">收藏少 · 专辑少（55 篇）<br/>轻量使用，尚未养成整理习惯</figcaption>
 </figure>
 </div>
 
@@ -279,23 +279,23 @@ export const productDocContent = `# 「薯管家」小红书主站收藏夹 AI A
 
 <table style="width:100%;font-size:14px;border-collapse:collapse;">
 <thead><tr style="border-bottom:2px solid #e5e7eb;text-align:left;">
-<th style="white-space:nowrap;padding:8px 10px;">旅程阶段</th><th style="padding:8px 10px;">功能模块</th><th style="padding:8px 10px;">子功能</th><th style="padding:8px 10px;">状态</th><th style="padding:8px 10px;">备注</th>
+<th style="white-space:nowrap;padding:8px 12px;min-width:140px;">旅程阶段</th><th style="white-space:nowrap;padding:8px 10px;">功能模块</th><th style="white-space:nowrap;padding:8px 10px;">子功能</th><th style="white-space:nowrap;padding:8px 10px;">状态</th><th style="padding:8px 10px;">备注</th>
 </tr></thead>
 <tbody>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 1 存储</td><td style="padding:6px 10px;">智能收藏</td><td style="padding:6px 10px;">AI 推荐专辑（多选）</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Demo 可体验</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">智能分类</td><td style="padding:6px 10px;">一键 AI 分类</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Demo 可体验</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">智能分类</td><td style="padding:6px 10px;">三类用户画像策略</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">多专辑少 / 多专辑多 / 少专辑少</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">自动打标签</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">展示 AI 多维标签</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">时效性检测</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">按原因分组展示</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="padding:6px 10px;">自动沉淀</td><td style="padding:6px 10px;">RAG 知识库</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">结构化知识条目</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">对话式协同</td><td style="padding:6px 10px;">薯管家对话</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">意图识别 + 工具调用</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">对话式协同</td><td style="padding:6px 10px;">深度攻略生成</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">Deep Research 5 步链路</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">数据链路</td><td style="padding:6px 10px;">数据链路搭建</td><td style="padding:6px 10px;">✅ 已完成</td><td style="padding:6px 10px;">真实用户数据 pipeline</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="padding:6px 10px;">数据链路</td><td style="padding:6px 10px;">Prompt Engineering</td><td style="padding:6px 10px;">✅ 已完成</td><td style="padding:6px 10px;">Multi-Agent 链路设计</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">主动推送</td><td style="padding:6px 10px;">收藏报告 / 体检 / 时光轴</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">动态 tab 展示</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">收藏社交</td><td style="padding:6px 10px;">品味匹配</td><td style="padding:6px 10px;">✅ MVP</td><td style="padding:6px 10px;">匹配度 + 兴趣卡片</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">场景激活</td><td style="padding:6px 10px;">那年今日 / 兴趣共振 / 故地重游</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">三种触发机制</td></tr>
-<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="padding:6px 10px;">主动推送</td><td style="padding:6px 10px;">过期清理提醒</td><td style="padding:6px 10px;">📐 设计完成</td><td style="padding:6px 10px;">推送卡片</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 1 存储</td><td style="white-space:nowrap;padding:6px 10px;">智能收藏</td><td style="white-space:nowrap;padding:6px 10px;">AI 推荐专辑（多选）</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">Demo 可体验</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="white-space:nowrap;padding:6px 10px;">智能分类</td><td style="white-space:nowrap;padding:6px 10px;">一键 AI 分类</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">Demo 可体验</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="white-space:nowrap;padding:6px 10px;">智能分类</td><td style="white-space:nowrap;padding:6px 10px;">三类用户画像策略</td><td style="white-space:nowrap;padding:6px 10px;">📐 设计完成</td><td style="white-space:nowrap;padding:6px 10px;">按收藏×专辑分三类策略</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="white-space:nowrap;padding:6px 10px;">自动沉淀</td><td style="white-space:nowrap;padding:6px 10px;">自动打标签</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">展示 AI 多维标签</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="white-space:nowrap;padding:6px 10px;">自动沉淀</td><td style="white-space:nowrap;padding:6px 10px;">时效性检测</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">按原因分组展示</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 2 管理</td><td style="white-space:nowrap;padding:6px 10px;">自动沉淀</td><td style="white-space:nowrap;padding:6px 10px;">RAG 知识库</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">结构化知识条目</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="white-space:nowrap;padding:6px 10px;">对话式协同</td><td style="white-space:nowrap;padding:6px 10px;">薯管家对话</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">意图识别 + 工具调用</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="white-space:nowrap;padding:6px 10px;">对话式协同</td><td style="white-space:nowrap;padding:6px 10px;">深度攻略生成</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">Deep Research 5 步链路</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="white-space:nowrap;padding:6px 10px;">数据链路</td><td style="white-space:nowrap;padding:6px 10px;">数据链路搭建</td><td style="white-space:nowrap;padding:6px 10px;">✅ 已完成</td><td style="white-space:nowrap;padding:6px 10px;">真实用户数据 pipeline</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 3 应用</td><td style="white-space:nowrap;padding:6px 10px;">数据链路</td><td style="white-space:nowrap;padding:6px 10px;">Prompt Engineering</td><td style="white-space:nowrap;padding:6px 10px;">✅ 已完成</td><td style="white-space:nowrap;padding:6px 10px;">Multi-Agent 链路设计</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="white-space:nowrap;padding:6px 10px;">主动推送</td><td style="white-space:nowrap;padding:6px 10px;">收藏报告 / 体检 / 时光轴</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">动态 tab 展示</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="white-space:nowrap;padding:6px 10px;">收藏社交</td><td style="white-space:nowrap;padding:6px 10px;">品味匹配</td><td style="white-space:nowrap;padding:6px 10px;">✅ MVP</td><td style="white-space:nowrap;padding:6px 10px;">匹配度 + 兴趣卡片</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="white-space:nowrap;padding:6px 10px;">场景激活</td><td style="white-space:nowrap;padding:6px 10px;">那年今日 / 兴趣共振 / 故地重游</td><td style="white-space:nowrap;padding:6px 10px;">📐 设计完成</td><td style="white-space:nowrap;padding:6px 10px;">三种触发机制</td></tr>
+<tr><td style="white-space:nowrap;padding:6px 10px;">Step 4 延伸</td><td style="white-space:nowrap;padding:6px 10px;">主动推送</td><td style="white-space:nowrap;padding:6px 10px;">过期清理提醒</td><td style="white-space:nowrap;padding:6px 10px;">📐 设计完成</td><td style="white-space:nowrap;padding:6px 10px;">推送卡片</td></tr>
 </tbody>
 </table>
 
@@ -1180,6 +1180,4 @@ Agent 生产标注样本 → 质量校验 → 去重合版 → 版本管理(YAML
 - **Markdown 回复渲染：** Agent 回复支持加粗、列表、标题等富文本格式
 - **SSE 流式输出：** 对话回复逐字流式展示，工具调用实时显示执行状态
 - **双路径入口：** 点击薯管家 → 对话式交互；点击「帮我整理」→ 直接分类结果
-
-**部署：** Vercel 在线部署，面试官通过链接直接体验完整流程
 `;
